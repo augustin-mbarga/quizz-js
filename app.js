@@ -18,6 +18,7 @@ function handleSubmit(event) {
     }
   });
   showResults(results, score);
+  addColor(results);
 }
 
 const titleResult = document.querySelector(".results h2");
@@ -100,4 +101,30 @@ function displayFooter(obj) {
   helpResult.style.display = obj.displayType;
   markResult.innerHTML = obj.mark;
   markResult.style.display = obj.displayType;
+}
+
+const questions = document.querySelectorAll(".question-block");
+
+function addColor(results) {
+  results.forEach((_, index) => {
+    results[index]
+      ? (questions[index].style.backgroundImage =
+          "linear-gradient(to right, #a8ff78, #78ffd6)")
+      : (questions[index].style.backgroundImage =
+          "linear-gradient(to right, #f5567b, #fd674c)");
+  });
+}
+
+const radioInputs = document.querySelectorAll("input[type='radio']");
+
+radioInputs.forEach((radioInput) =>
+  radioInput.addEventListener("input", resetColor)
+);
+
+function resetColor(event) {
+  const index = event.target.getAttribute("name").slice(1) - 1; // for instance q3 -> 3
+  const parentQuestionBlock = questions[index];
+
+  parentQuestionBlock.style.backgroundColor = "#f1f1f1";
+  parentQuestionBlock.style.backgroundImage = "none";
 }
